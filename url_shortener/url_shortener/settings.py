@@ -76,12 +76,12 @@ WSGI_APPLICATION = 'url_shortener.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'codelink',
-        'USER': 'codelink',
-        'PASSWORD': 'codelink',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        #'PASSWORD': 'codelink',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 

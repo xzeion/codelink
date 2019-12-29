@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    command: gunicorn url_shortener.wsgi --bind 0.0.0.0:8000
+    depends_on:
+      - db
+    networks:
+      - backend
+    volumes:
+      - ./url_shortener:/code
+    ports:
+      - "8000:8000"
+
+  nginx:
+    image: nginx:latest
+    networks:
+      - backend
+    depends_on:
+      - web
+
+  db:
+    image: postgres
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
