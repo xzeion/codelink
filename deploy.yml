@@ -4,7 +4,7 @@ services:
   web:
     container_name: CL
     build: .
-    command: python manage.py runserver_plus 0.0.0.0:8000
+    command: gunicorn url_shortener.wsgi --bind 0.0.0.0:8000 -w 5 -t 120 --log-level=debug
     depends_on:
       - db
     networks:
@@ -14,10 +14,17 @@ services:
     ports:
       - "8000:8000"
 
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    networks:
+      - backend
+    depends_on:
+      - web
+
   db:
     container_name: postgres
     image: postgres
-    restart: always
     environment:
       - "POSTGRES_PASSWORD=postgres"
     expose:
